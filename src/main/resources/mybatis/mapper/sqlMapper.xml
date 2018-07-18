@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+	<select id="query" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select  o.id, oi.id as item_id,p.product_name ,o.status
+          from client_order o join order_item oi on (o.id=oi.order_id) join product p on (oi.product_code = p.product_code)
+		 order by o.id desc
+	</select>
+</mapper>

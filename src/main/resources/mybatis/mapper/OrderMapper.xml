@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.persistence.mybatis.mapper.OrderMapper">
+
+	<select id="all" resultMap="BaseResultMap">
+	  select * from client_order
+	</select>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.eshop.biz.entity.Order">
+        <id column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="order_date" property="orderDate" />
+        <result column="order_amount" property="orderAmount" />
+        <collection property="items" ofType="com.eshop.biz.entity.OrderItem"
+          column="{orderId=id}" select="com.eshop.persistence.mybatis.mapper.OrderItemMapper.listByOrderId"
+        >  
+        </collection>  
+    </resultMap>
+      <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, status, order_date, order_amount
+    </sql>
+    
+    <select id="getById"  resultMap="BaseResultMap">
+    	SELECT <include refid="Base_Column_List"/>
+    	from client_order
+    	where id=#{id}
+	</select>
+
+  
+</mapper>
